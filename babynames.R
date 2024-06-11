@@ -28,6 +28,23 @@ ggplot(data = Joes, aes(x = year, y= n, color = sex)) +
 
 names2002 <- bb_names %>% 
   filter(year == 2002) %>% 
-  filter(name %in% c('Joe', 'Marie', 'Mary', 'John', 'Johnny', ))
+  filter(name %in% c('Joe', 'Marie', 'Mary', 'John', 'Johnny', 'Jack' ))
 ggplot(data = names2002, aes(x = name, y= n)) +
-  geom_bar()
+  geom_col(fill = "blue")
+
+
+
+#Create a new data set called the_nineties that only contains years from the 1990s.
+
+the_nineties <- bb_names %>% 
+  filter(year < 2000) %>% 
+  filter(year > 1989)
+
+#Save this dataset to your repository (use write_csv()).
+write_csv(the_nineties, "the_nineties.csv")
+
+fifties <- babynames %>% 
+  filter(year < 1960) %>% 
+  filter(year > 1949) %>% 
+  filter(sex == "F")
+
