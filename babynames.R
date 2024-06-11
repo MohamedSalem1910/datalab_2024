@@ -48,3 +48,9 @@ fifties <- babynames %>%
   filter(year > 1949) %>% 
   filter(sex == "F")
 
+#Now that everything is up to date, make a visualisation of you and your team member’s names for a year of your choice.
+groupnames <- bb_names %>% 
+  filter(year == 2003) %>% 
+  filter(name %in% c('Ramzy', 'Oysik', 'Mohamed', 'Buchanan'))
+ggplot(data = groupnames , aes(x = name, y= n, fill = sex)) +
+  geom_col()
