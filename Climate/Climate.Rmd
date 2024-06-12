@@ -1,0 +1,39 @@
+## Maximum and minimum temperetures over time.
+```{r setup, include=TRUE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+library(tidyverse)
+library(ggplot2)
+sewanee_weather <- read_csv("sewanee_weather.csv")
+
+ggplot(data = sewanee_weather, aes(x=DATE, y=TMIN)) +
+  geom_line() +
+  labs(title = "Line Graph of Minimum Temp.")
+
+ggplot(data = sewanee_weather, aes(x=DATE, y=TMAX)) +
+  geom_line() +
+  labs(title = "Line Graph of Maximum Temp.")
+```
+
+## Snowfall Over Time
+```{r}
+
+ggplot(data = sewanee_weather, aes(x=DATE, y=SNOW)) +
+  geom_line()
+```
+### snow again?
+```{r setup, include=TRUE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+
+library(lubridate)
+sewanee_weatherr <- sewanee_weather %>% 
+  mutate(MONTH = month(DATE)) %>% 
+  mutate(YEAR = year(DATE))
+
+sewanee_weatherrr <- sewanee_weatherr
+  sewanee_weather$YEARMONTH = paste(sewanee_weatherr$YEAR, sewanee_weatherr$MONTH, sep = "")
+  
+ggplot(data = sewanee_weatherrr, aes(x=YEARMONTH, y=SNOW)) +
+  geom_point() +
+  facet_wrap(YEAR)
+
+```
