@@ -1,0 +1,45 @@
+``` {r}
+library(dplyr)
+library(readr)
+library(stringr)
+library(lubridate)
+
+dives <- read_csv('https://raw.githubusercontent.com/databrew/intro-to-data-science/main/data/whales-dives.csv')
+
+messy_dives <- 
+read_csv('https://raw.githubusercontent.com/databrew/intro-to-data-science/main/data/whales-dives-messy.csv')
+
+head(messy_dives)
+
+head(dives)
+```
+### Renaming Cols
+```{r}
+my_dives <- messy_dives %>%
+  rename(species = Species.ID, behavior = bhvr, prey.volume = PreyVolume, prey.depth = PreyDepth, dive.time = Dive_Time, surface.time = Surfacetime, blow.interval = Blow.Interval, blow.number = Blow_number_count)
+```
+### MONTH AND DAY COLS
+```{r}
+my_dives <- my_dives %>%
+  mutate(Month = str_pad(Month, width="2", side="left", pad="0")) %>% 
+  mutate(Day = str_pad(Day, width="2", side="left", pad="0"))  %>% 
+  mutate(year_num = nchar(YEAR),
+         YEAR=ifelse(year_num == 4, YEAR,  str_pad(YEAR, width="3", side="left", pad="0")))  %>% 
+  mutate(year_num = nchar(YEAR),
+         YEAR=ifelse(year_num == 4, YEAR,  str_pad(YEAR, width="4", side="left", pad="2"))) %>% 
+  mutate(sit = substr(sit,10,12))
+```
+### Combine the cols
+```{r}
+my_dives <- my_dives %>% 
+  mutate( id = paste0(YEAR, Month, Day, sit))
+```
+### Removing cols
+```{r}
+my_dives <- messy_dives %>% 
+  select(id, species, behavior, prey.volume, prey.depth, dive.time, surface.time, blow.interval, blow.number)
+```
+### testing
+```{r}
+identical(dives,messy_dives)
+```
