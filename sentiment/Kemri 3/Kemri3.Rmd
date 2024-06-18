@@ -1,0 +1,20 @@
+#Congo 
+```{r}
+library(sf) 
+library(rnaturalearth) 
+library(rnaturalearthhires)
+library(rnaturalearthdata) 
+library(osmdata) 
+library(tidycensus)
+library(tidyverse)
+library(tmap)
+library(dplyr)
+library(readr)
+Congo <- ne_countries( country = "Democratic Republic of the Congo", returnclass = "sf" )
+tm_shape( Congo ) + 
+  tm_polygons()
+```
+#Downloading the data 
+```{r}
+df <- read_csv('https://mbrudd.com/drc_data/DRC_data.csv')
+```
